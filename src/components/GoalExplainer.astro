@@ -1,0 +1,27 @@
+---
+interface Props {
+  goal: number;
+  deadline: Date;
+}
+
+const { goal, deadline } = Astro.props;
+const deadlineIso = deadline.toISOString().slice(0, 10);
+---
+
+<aside class="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-6 text-sm leading-relaxed">
+  <h3 class="mb-2 text-base font-semibold text-white">How this pre-order works</h3>
+  <ol class="list-decimal space-y-2 pl-5 text-[var(--color-muted)]">
+    <li>
+      You pre-order today at the full launch price. Your card is charged now via Stripe.
+    </li>
+    <li>
+      If we hit <span class="font-semibold text-white">{goal} pre-orders by {deadlineIso}</span>, we build it and email you the files within 21 days.
+    </li>
+    <li>
+      If we don&rsquo;t hit the goal, every pre-order is refunded in full within 48 hours of the deadline. You lose nothing.
+    </li>
+  </ol>
+  <p class="mt-3 text-xs text-[var(--color-muted)]">
+    We build what the market actually wants, instead of guessing. You only pay for things enough other people also wanted.
+  </p>
+</aside>

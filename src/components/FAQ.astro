@@ -1,0 +1,22 @@
+---
+interface Props {
+  items: { q: string; a: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-6">
+  <h3 class="mb-4 text-base font-semibold text-white">FAQ</h3>
+  <div class="divide-y divide-[var(--color-border)]">
+    {items.map((item) => (
+      <details class="group py-3">
+        <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-white">
+          <span>{item.q}</span>
+          <span class="text-[var(--color-muted)] group-open:rotate-45 transition-transform">+</span>
+        </summary>
+        <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{item.a}</p>
+      </details>
+    ))}
+  </div>
+</section>

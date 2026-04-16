@@ -1,0 +1,32 @@
+---
+import { buildShareLinks } from '~/lib/share';
+
+interface Props {
+  productUrl: string;
+  title: string;
+  tagline: string;
+  subreddit?: string;
+}
+
+const { productUrl, title, tagline, subreddit } = Astro.props;
+const targets = buildShareLinks({ productUrl, title, tagline, subreddit });
+---
+
+<section class="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-6">
+  <h3 class="mb-1 text-base font-semibold text-white">Share this — get $10 off</h3>
+  <p class="mb-4 text-sm text-[var(--color-muted)]">
+    If someone pre-orders from your link, we refund you $10. Reply to your Stripe receipt with the post and we&rsquo;ll credit you.
+  </p>
+  <div class="flex flex-wrap gap-2">
+    {targets.map((t) => (
+      <a
+        href={t.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-lg border border-[var(--color-border)] bg-white/[0.04] px-3 py-2 text-sm font-medium hover:bg-white/[0.08]"
+      >
+        Share on {t.name}
+      </a>
+    ))}
+  </div>
+</section>

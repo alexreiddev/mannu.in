@@ -1,0 +1,50 @@
+---
+import { daysUntil, progressPct, isFunded } from '~/lib/products';
+
+interface Props {
+  preordersSoFar: number;
+  preorderGoal: number;
+  deadline: Date;
+  status: 'smoke-test' | 'building' | 'shipped' | 'retired';
+}
+
+const { preordersSoFar, preorderGoal, deadline, status } = Astro.props;
+const pct = progressPct(preordersSoFar, preorderGoal);
+const days = daysUntil(deadline);
+const funded = isFunded(preordersSoFar, preorderGoal);
+const deadlineIso = deadline.toISOString().slice(0, 10);
+
+const statusLabel = {
+  'smoke-test': funded ? 'Funded — building' : 'Validating',
+  building: 'Building',
+  shipped: 'Shipped',
+  retired: 'Retired',
+}[status];
+---
+
+<div class="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-5">
+  <div class="mb-2 flex items-baseline justify-between text-sm">
+    <span class="font-medium text-white">
+      {preordersSoFar} of {preorderGoal} pre-orders
+    </span>
+    <span class="text-[var(--color-muted)] tabular-nums">
+      {status === 'smoke-test' ? `${days} days left • deadline ${deadlineIso}` : statusLabel}
+    </span>
+  </div>
+  <div class="h-2 overflow-hidden rounded-full bg-white/10">
+    <div
+      class="h-full rounded-full bg-[var(--color-success)] transition-[width]"
+      style={`width: ${pct}%`}
+    >
+    </div>
+  </div>
+  <div class="mt-2 text-xs text-[var(--color-muted)]">
+    <span class="font-medium text-white">{statusLabel}.</span>
+    {status === 'smoke-test' && !funded && (
+      <span>If we don&rsquo;t hit the goal, every pre-order is refunded within 48h.</span>
+    )}
+    {status === 'smoke-test' && funded && (
+      <span>Goal hit. Building now. Delivery within 21 days of deadline.</span>
+    )}
+  </div>
+</div>

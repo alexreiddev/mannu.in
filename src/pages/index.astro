@@ -1,0 +1,76 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PreorderButton from '~/components/PreorderButton.astro';
+import ValidationBar from '~/components/ValidationBar.astro';
+import { getAllProducts } from '~/lib/products';
+
+const products = await getAllProducts();
+const title = 'mannu.in — validated digital assets, pre-order only';
+const description =
+  'Digital playbooks, prompt packs, and automation bundles sold by pre-order. If a goal misses, every buyer is refunded. You only pay for things enough other people also wanted.';
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="py-8">
+    <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+      Pre-order digital assets that are validated before they exist.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Every product on this page has a pre-order goal and a deadline. If enough people pre-order, we build it. If not, everyone is refunded within 48 hours. No marketing spend. No guessing.
+    </p>
+  </section>
+
+  <section id="products" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {products.map((p) => (
+      <article class="flex h-full flex-col rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6">
+        <div class="mb-4 text-xs uppercase tracking-wider text-[var(--color-muted)]">
+          {p.data.buyer}
+        </div>
+        <h2 class="text-xl font-semibold">
+          <a href={`/p/${p.id}`} class="hover:underline">{p.data.title}</a>
+        </h2>
+        <p class="mt-2 text-sm text-[var(--color-muted)]">{p.data.tagline}</p>
+        <div class="mt-5">
+          <ValidationBar
+            preordersSoFar={p.data.preordersSoFar}
+            preorderGoal={p.data.preorderGoal}
+            deadline={p.data.deadline}
+            status={p.data.status}
+          />
+        </div>
+        <div class="mt-auto flex items-center justify-between pt-6">
+          <a href={`/p/${p.id}`} class="text-sm font-medium hover:underline">Details →</a>
+          <PreorderButton
+            href={p.data.stripePaymentLinkUrl}
+            priceUsd={p.data.priceUsd}
+            small
+          />
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section id="how-it-works" class="mt-16 rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-8">
+    <h2 class="text-2xl font-semibold">How pre-orders work here</h2>
+    <ol class="mt-5 grid gap-4 sm:grid-cols-3">
+      <li class="rounded-xl border border-[var(--color-border)] p-4">
+        <div class="text-sm font-semibold text-white">1. You pre-order</div>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">
+          Pay the full launch price today via Stripe. Real money = real validation signal.
+        </p>
+      </li>
+      <li class="rounded-xl border border-[var(--color-border)] p-4">
+        <div class="text-sm font-semibold text-white">2. Goal hits, we build</div>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">
+          Every product has a public pre-order goal. If it hits by the deadline, we build and deliver within 21 days.
+        </p>
+      </li>
+      <li class="rounded-xl border border-[var(--color-border)] p-4">
+        <div class="text-sm font-semibold text-white">3. Goal misses, full refund</div>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">
+          If the goal misses, every pre-order is refunded within 48 hours. You lose nothing. We learn faster.
+        </p>
+      </li>
+    </ol>
+  </section>
+</BaseLayout>
