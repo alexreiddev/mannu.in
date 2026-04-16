@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string;
+  priceUsd: number;
+  label?: string;
+  small?: boolean;
+}
+
+const { href, priceUsd, label = 'Pre-order', small = false } = Astro.props;
+const size = small ? 'px-5 py-2 text-sm' : 'px-7 py-4 text-lg';
+---
+
+<a
+  href={href}
+  rel="noopener"
+  class={`inline-flex items-center justify-center gap-3 rounded-xl bg-[var(--color-accent)] font-semibold text-[var(--color-accent-fg)] shadow-[0_0_0_1px_rgba(255,183,3,0.35)] transition hover:brightness-110 active:translate-y-px ${size}`}
+>
+  <span>{label}</span>
+  <span class="rounded-md bg-black/10 px-2 py-0.5 text-sm font-bold tabular-nums">${priceUsd}</span>
+</a>

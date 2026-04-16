@@ -1,0 +1,38 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Pre-order confirmed — mannu.in"
+  description="Your pre-order is in. Here's exactly what happens next."
+>
+  <section class="mx-auto max-w-2xl py-12 text-center">
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Pre-order confirmed.</h1>
+    <p class="mt-4 text-lg text-[var(--color-muted)]">
+      Your payment is held by Stripe. You will get one of two emails before the deadline on the product page.
+    </p>
+
+    <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 text-left">
+      <h2 class="text-lg font-semibold">What happens next</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm text-[var(--color-muted)]">
+        <li>We keep the pre-order counter public so you can watch it hit the goal.</li>
+        <li>If the goal hits, you get the files by email within 21 days of the deadline.</li>
+        <li>If the goal misses, Stripe auto-refunds you within 48 hours. No action needed.</li>
+      </ol>
+    </div>
+
+    <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 text-left">
+      <h2 class="text-lg font-semibold">Get $10 back</h2>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">
+        If a friend pre-orders from your shared link, reply to your Stripe receipt with the post and we&rsquo;ll credit you $10 per friend.
+      </p>
+    </div>
+
+    <a
+      href="/"
+      class="mt-10 inline-block rounded-xl border border-[var(--color-border)] bg-white/[0.04] px-5 py-3 text-sm font-medium hover:bg-white/[0.08]"
+    >
+      Back to the storefront
+    </a>
+  </section>
+</BaseLayout>

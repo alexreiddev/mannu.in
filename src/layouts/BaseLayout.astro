@@ -1,0 +1,56 @@
+---
+import '~/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const { title, description, ogImage = '/og/default.png', canonical } = Astro.props;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+const absoluteOg = new URL(ogImage, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteOg} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOg} />
+  </head>
+  <body class="min-h-screen antialiased">
+    <header class="border-b border-[var(--color-border)]">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+        <a href="/" class="text-lg font-semibold tracking-tight">mannu.in</a>
+        <nav class="flex items-center gap-6 text-sm text-[var(--color-muted)]">
+          <a href="/#products" class="hover:text-white">Products</a>
+          <a href="/#how-it-works" class="hover:text-white">How pre-orders work</a>
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-5xl px-6 py-12">
+      <slot />
+    </main>
+    <footer class="border-t border-[var(--color-border)] py-10 text-sm text-[var(--color-muted)]">
+      <div class="mx-auto flex max-w-5xl flex-col gap-2 px-6 sm:flex-row sm:items-center sm:justify-between">
+        <span>&copy; {new Date().getFullYear()} mannu.in. Pre-orders are fully refundable if a goal is missed.</span>
+        <a href="/rss.xml" class="hover:text-white">RSS</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  samplePath?: string;
+  title: string;
+}
+
+const { samplePath, title } = Astro.props;
+---
+
+{samplePath && (
+  <section class="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-6">
+    <h3 class="mb-1 text-base font-semibold text-white">Free preview</h3>
+    <p class="mb-4 text-sm text-[var(--color-muted)]">
+      Not ready to pre-order? Grab a free sample of <span class="text-white">{title}</span> — a 20% slice of the real pack, no email required.
+    </p>
+    <a
+      href={samplePath}
+      download
+      class="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-white/[0.04] px-4 py-2 text-sm font-medium hover:bg-white/[0.08]"
+    >
+      Download free sample (PDF)
+    </a>
+  </section>
+)}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mannu.in/sitemap-index.xml
